@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ShoppingBag, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import CartItem from '@/components/CartItem';
+import { formatPrice } from '@/lib/utils';
 
 export default function CartPage() {
   const router = useRouter();
@@ -110,7 +111,7 @@ export default function CartPage() {
           <div className="bg-gray-50 p-6 sm:p-8 border-t border-gray-100">
             <div className="flex justify-between items-center mb-6">
               <span className="text-lg font-medium text-gray-600">Total Amount</span>
-              <span className="text-3xl font-bold text-gray-900">${total.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-gray-900">{formatPrice(total)}</span>
             </div>
             
             <button

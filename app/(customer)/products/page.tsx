@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import { Loader2, Search, X } from 'lucide-react';
 
@@ -31,11 +32,12 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(() => searchParams.get('category') ?? 'All');
 
   useEffect(() => {
     const fetchProducts = async () => {
