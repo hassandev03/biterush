@@ -1,0 +1,29 @@
+import { NextResponse } from 'next/server';
+import dbConnect from '@/lib/mongodb';
+import Order from '@/models/Order';
+import { verifyAuth } from '@/lib/auth';
+import { cookies } from 'next/headers';
+
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const payload = await verifyAuth(token);
+    await dbConnect();
+    const resolvedParams = await params;
+    const order = await Order.findById(resolvedParams.id).populate('items.product', 'name image price');
+    
+    if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+
+    // Ensure customer can only view their own order
+    if (payload.role !== 'admin' && order.customer.toString() !== payload.userId) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    return NextResponse.json(order, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
