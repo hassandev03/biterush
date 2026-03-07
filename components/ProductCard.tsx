@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { ShoppingCart, Star, Flame, Leaf } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import { formatPrice } from '@/lib/utils';
@@ -31,6 +32,11 @@ const spiceColors: Record<string, string> = {
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
   const isOutOfStock = typeof product.stock === 'number' && product.stock <= 0;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('userRole'));
+  }, []);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -107,14 +113,24 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Price + Add to Cart */}
           <div className="flex items-center justify-between gap-2 mt-auto">
             <span className="text-base font-bold text-orange-500">{formatPrice(product.price)}</span>
-            <button
-              onClick={handleAddToCart}
-              disabled={isOutOfStock}
-              className="flex items-center gap-1.5 bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white py-1.5 px-3 rounded-xl text-xs font-semibold transition-all border border-orange-100 hover:border-orange-500 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <ShoppingCart className="h-3.5 w-3.5" />
-              Add
-            </button>
+            {isLoggedIn ? (
+              <button
+                onClick={handleAddToCart}
+                disabled={isOutOfStock}
+                className="flex items-center gap-1.5 bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white py-1.5 px-3 rounded-xl text-xs font-semibold transition-all border border-orange-100 hover:border-orange-500 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <ShoppingCart className="h-3.5 w-3.5" />
+                Add
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 text-gray-500 py-1.5 px-3 rounded-xl text-xs font-semibold transition-all border border-gray-200"
+              >
+                Login to order
+              </Link>
+            )}
           </div>
         </div>
       </div>
