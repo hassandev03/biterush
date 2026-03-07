@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Password mismatch' }, { status: 401 });
     }
 
-    const token = await signToken({ userId: user._id, role: user.role });
+    const token = await signToken({ userId: user._id.toString(), role: user.role });
 
     const response = NextResponse.json({ message: 'Login successful', role: user.role }, { status: 200 });
     response.cookies.set('token', token, {

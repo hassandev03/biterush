@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       role: 'customer',
     });
 
-    const token = await signToken({ userId: user._id, role: user.role });
+    const token = await signToken({ userId: user._id.toString(), role: user.role });
 
     const response = NextResponse.json({ message: 'User created successfully', role: user.role }, { status: 201 });
     response.cookies.set('token', token, {
