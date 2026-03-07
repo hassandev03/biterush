@@ -15,10 +15,10 @@ export default function AdminDashboard() {
           fetch('/api/products'),
           fetch('/api/orders')
         ]);
-        
+
         const products = await productsRes.json();
         const orders = await ordersRes.json();
-        
+
         setStats({
           products: Array.isArray(products) ? products.length : 0,
           orders: Array.isArray(orders) ? orders.length : 0
@@ -55,7 +55,7 @@ export default function AdminDashboard() {
             <p className="text-4xl font-bold text-gray-900">{stats.products}</p>
           </div>
         </div>
-        
+
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-6">
           <div className="h-16 w-16 bg-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0">
             <ShoppingBag className="h-8 w-8 text-blue-500" />
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Link 
+        <Link
           href="/admin/dashboard/products"
           className="group bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-orange-200 hover:shadow-md transition-all flex items-center justify-between"
         >

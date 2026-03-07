@@ -1,7 +1,9 @@
 node_modules/
 .next/
 coverage/
+scripts/
 .DS_Store
 *.log
 .env*
 !.env.example
+tmpclaude*

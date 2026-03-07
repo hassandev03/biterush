@@ -9,7 +9,7 @@ export default function EditProductPage() {
   const router = useRouter();
   const params = useParams();
   const isNew = params.id === 'new';
-  
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -94,7 +94,7 @@ export default function EditProductPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Link 
+      <Link
         href="/admin/dashboard/products"
         className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-8 font-medium w-fit"
       >

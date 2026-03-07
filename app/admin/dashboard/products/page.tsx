@@ -62,7 +62,7 @@ export default function AdminProductsPage() {
           <p className="mt-2 text-gray-500">Manage your menu items.</p>
         </div>
         <Link
-          href="/admin/dashboard/products/new"
+          href="/admin/dashboard/products/new/edit"
           className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold transition-colors shadow-sm"
         >
           <Plus className="h-5 w-5" />

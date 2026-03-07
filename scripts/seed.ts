@@ -32,7 +32,6 @@ const Product = mongoose.models.Product || mongoose.model('Product', ProductSche
 const sampleProducts = [
   // --- Burgers ---
   { name: 'Zinger Burger', description: 'Crispy fried chicken thigh fillet with spicy mayo and fresh lettuce in a sesame bun.', price: 4.99, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', category: 'Burgers', stock: 100 },
-  { name: 'Beef Smash Burger', description: 'Double beef smash patties with melted cheddar, caramelized onions, and house sauce.', price: 6.49, image: 'https://images.unsplash.com/photo-1594212202875-861dce707334?auto=format&fit=crop&w=800&q=80', category: 'Burgers', stock: 80 },
   { name: 'Grilled Chicken Burger', description: 'Healthy grilled chicken breast with tomatoes, lettuce, and garlic sauce.', price: 5.49, image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80', category: 'Burgers', stock: 60 },
   { name: 'Jalapeno Beef Burger', description: 'Spicy beef patty loaded with jalapenos, pepper jack cheese, and spicy sauce.', price: 6.99, image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=800&q=80', category: 'Burgers', stock: 50 },
   { name: 'Mushroom Swiss Burger', description: 'Juicy beef patty topped with sautéed mushrooms and melted Swiss cheese.', price: 7.49, image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', category: 'Burgers', stock: 40 },
@@ -59,7 +58,6 @@ const sampleProducts = [
   { name: 'Chicken Tikka Boti', description: 'Charcoal-grilled chicken pieces marinated in spicy yogurt.', price: 7.49, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 60 },
   { name: 'Seekh Kebab', description: 'Minced beef kebabs mixed with herbs and spices, grilled to perfection.', price: 6.99, image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 80 },
   { name: 'Nihari', description: 'Slow-cooked beef stew with bone marrow, garnished with ginger and green chilies.', price: 8.99, image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 30 },
-  { name: 'Garlic Naan', description: 'Freshly baked flatbread topped with minced garlic and butter.', price: 1.49, image: 'https://images.unsplash.com/photo-1626082895617-2c6b4122d10f?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 200 },
   { name: 'Beef Pulao', description: 'Traditional Bannu style beef pulao cooked in rich bone broth with aromatic spices.', price: 6.99, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 70 },
   { name: 'Chicken Haleem', description: 'Slow-cooked blend of lentils, wheat, and shredded chicken, topped with fried onions and ginger.', price: 5.49, image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 60 },
   { name: 'Daal Chawal', description: 'Comforting yellow lentils served over steamed white rice with a side of mixed pickle.', price: 3.99, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80', category: 'Pakistani', stock: 100 },
@@ -68,7 +66,6 @@ const sampleProducts = [
 
   // --- Fast Food & Wraps ---
   { name: 'Chicken Shawarma', description: 'Middle Eastern style roasted chicken slices wrapped in pita bread with garlic sauce.', price: 3.99, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80', category: 'Wraps', stock: 120 },
-  { name: 'Zinger Paratha Roll', description: 'Crispy chicken zinger wrapped in a flaky paratha with mayo and chutney.', price: 4.49, image: 'https://images.unsplash.com/photo-1626804475297-41609ea0eb4eb?auto=format&fit=crop&w=800&q=80', category: 'Wraps', stock: 90 },
   { name: 'Club Sandwich', description: 'Triple-decker sandwich with chicken, egg, cheese, lettuce, and mayo. Served with fries.', price: 6.99, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80', category: 'Sandwiches', stock: 50 },
   { name: 'Loaded Fries', description: 'Crispy fries topped with melted cheese, jalapenos, and grilled chicken chunks.', price: 5.49, image: 'https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=800&q=80', category: 'Sides', stock: 100 },
   { name: 'Crispy Fried Chicken (2 Pcs)', description: 'Two pieces of golden, crispy, and juicy fried chicken.', price: 4.99, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80', category: 'Fast Food', stock: 150 },
@@ -82,7 +79,6 @@ const sampleProducts = [
   // --- Desserts ---
   { name: 'Chocolate Molten Lava Cake', description: 'Warm chocolate cake with a gooey chocolate center, served with vanilla ice cream.', price: 5.99, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=800&q=80', category: 'Desserts', stock: 30 },
   { name: 'Gulab Jamun (4 Pcs)', description: 'Traditional Pakistani sweet, deep-fried dough balls soaked in sugar syrup.', price: 3.49, image: 'https://images.unsplash.com/photo-1596803244618-8dbee441d70b?auto=format&fit=crop&w=800&q=80', category: 'Desserts', stock: 100 },
-  { name: 'Ras Malai', description: 'Soft cottage cheese dumplings soaked in sweetened, thickened milk delicately flavored with cardamom.', price: 4.99, image: 'https://images.unsplash.com/photo-1605197132819-d294028cb84c?auto=format&fit=crop&w=800&q=80', category: 'Desserts', stock: 40 },
   { name: 'New York Cheesecake', description: 'Classic, creamy cheesecake with a graham cracker crust.', price: 6.49, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80', category: 'Desserts', stock: 25 },
   { name: 'Brownie with Ice Cream', description: 'Fudgy walnut brownie topped with a scoop of vanilla ice cream and chocolate syrup.', price: 5.49, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80', category: 'Desserts', stock: 45 },
 
