@@ -45,6 +45,15 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     }
 
     const resolvedParams = await params;
+
+    // Fetch current order to check existing status
+    const existing = await Order.findById(resolvedParams.id);
+    if (!existing) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+
+    if (existing.status === 'delivered') {
+      return NextResponse.json({ error: 'Delivered orders cannot be modified' }, { status: 409 });
+    }
+
     const order = await Order.findByIdAndUpdate(
       resolvedParams.id,
       { status },

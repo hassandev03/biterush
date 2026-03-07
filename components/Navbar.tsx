@@ -32,8 +32,10 @@ export default function Navbar() {
 
   const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  const navLink = (href: string, label: string) => {
-    const isActive = pathname === href || pathname.startsWith(href + '/');
+  const navLink = (href: string, label: string, exact = false) => {
+    const isActive = exact
+      ? pathname === href
+      : pathname === href || pathname.startsWith(href + '/');
     return (
       <Link
         href={href}
@@ -66,7 +68,7 @@ export default function Navbar() {
           <div className="flex items-center gap-1">
             {userRole === 'admin' ? (
               <>
-                {navLink('/admin/dashboard', 'Dashboard')}
+                {navLink('/admin/dashboard', 'Dashboard', true)}
                 {navLink('/admin/dashboard/products', 'Products')}
                 {navLink('/admin/dashboard/orders', 'Orders')}
                 <button
@@ -80,6 +82,7 @@ export default function Navbar() {
             ) : userRole === 'customer' ? (
               <>
                 {navLink('/products', 'Menu')}
+                {navLink('/orders', 'My Orders')}
                 <Link
                   href="/cart"
                   className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${

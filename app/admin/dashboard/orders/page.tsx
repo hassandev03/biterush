@@ -160,21 +160,23 @@ export default function AdminOrdersPage() {
                       <td className="px-5 py-4">
                         <div className="relative inline-flex items-center gap-1">
                           <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.color}`}>{s.label}</span>
-                          <div className="relative">
-                            <select
-                              value={order.status}
-                              disabled={isUpdating}
-                              onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                              className="appearance-none pl-1 pr-4 py-0.5 text-xs text-gray-500 border border-gray-200 rounded-lg bg-white hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-orange-400 cursor-pointer disabled:opacity-50"
-                            >
-                              {statusOptions.map((s) => (
-                                <option key={s} value={s}>
-                                  {s.charAt(0).toUpperCase() + s.slice(1)}
-                                </option>
-                              ))}
-                            </select>
-                            <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
-                          </div>
+                          {order.status !== 'delivered' && (
+                            <div className="relative">
+                              <select
+                                value={order.status}
+                                disabled={isUpdating}
+                                onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                                className="appearance-none pl-1 pr-4 py-0.5 text-xs text-gray-500 border border-gray-200 rounded-lg bg-white hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-orange-400 cursor-pointer disabled:opacity-50"
+                              >
+                                {statusOptions.map((s) => (
+                                  <option key={s} value={s}>
+                                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                                  </option>
+                                ))}
+                              </select>
+                              <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
+                            </div>
+                          )}
                           {isUpdating && <Loader2 className="h-3.5 w-3.5 animate-spin text-orange-500" />}
                         </div>
                       </td>
