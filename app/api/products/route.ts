@@ -4,10 +4,29 @@ import Product from '@/models/Product';
 import { verifyAuth } from '@/lib/auth';
 import { cookies } from 'next/headers';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     await dbConnect();
-    const products = await Product.find({}).sort({ createdAt: -1 });
+
+    const { searchParams } = new URL(req.url);
+    const category = searchParams.get('category');
+    const search = searchParams.get('search');
+
+    const query: any = {};
+
+    if (category && category !== 'All') {
+      query.category = { $regex: new RegExp(`^${category}$`, 'i') };
+    }
+
+    if (search) {
+      query.$or = [
+        { name: { $regex: new RegExp(search, 'i') } },
+        { description: { $regex: new RegExp(search, 'i') } },
+        { tags: { $in: [new RegExp(search, 'i')] } },
+      ];
+    }
+
+    const products = await Product.find(query).sort({ createdAt: -1 });
     return NextResponse.json(products, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -26,7 +45,7 @@ export async function POST(req: Request) {
     await dbConnect();
     const body = await req.json();
     const product = await Product.create({ ...body, createdBy: payload.userId });
-    
+
     return NextResponse.json(product, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
