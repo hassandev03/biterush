@@ -84,7 +84,7 @@ export default function Home() {
               <>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 text-orange-600 font-semibold text-xs mb-6">
                   <UtensilsCrossed className="h-3.5 w-3.5" />
-                  <span>Fast delivery in Lahore</span>
+                  <span>Fast delivery in Town</span>
                 </div>
                 <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-4">
                   Hungry? We've got <br />
