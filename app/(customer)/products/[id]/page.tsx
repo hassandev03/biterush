@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingCart, ArrowLeft, Loader2, Star, Flame, Leaf, Clock, Tag } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
@@ -44,6 +45,11 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [added, setAdded] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('userRole'));
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -184,20 +190,30 @@ export default function ProductDetailPage() {
                 <StockBadge stock={product.stock} />
               </div>
 
-              <button
-                onClick={handleAddToCart}
-                disabled={product.stock <= 0}
-                className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-base font-bold transition-all ${
-                  added
-                    ? 'bg-green-500 text-white'
-                    : product.stock <= 0
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'
-                }`}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                {added ? 'Added to Cart!' : product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
-              </button>
+              {isLoggedIn ? (
+                <button
+                  onClick={handleAddToCart}
+                  disabled={product.stock <= 0}
+                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-base font-bold transition-all ${
+                    added
+                      ? 'bg-green-500 text-white'
+                      : product.stock <= 0
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm'
+                  }`}
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  {added ? 'Added to Cart!' : product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-base font-bold bg-orange-500 hover:bg-orange-600 text-white shadow-sm transition-all"
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  Login to Order
+                </Link>
+              )}
             </div>
           </div>
         </div>
