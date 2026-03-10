@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { ShoppingCart, LogOut, LayoutDashboard, UtensilsCrossed, Menu as MenuIcon } from 'lucide-react';
+import { ShoppingCart, LogOut, UtensilsCrossed } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import { useEffect, useState } from 'react';
 
