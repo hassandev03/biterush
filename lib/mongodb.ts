@@ -7,10 +7,6 @@ if (MONGODB_URI && MONGODB_URI.includes('?appName=Cluster0/biterush')) {
   MONGODB_URI = MONGODB_URI.replace('?appName=Cluster0/biterush', 'biterush?appName=Cluster0');
 }
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -18,6 +14,10 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  if (!MONGODB_URI) {
+    throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
