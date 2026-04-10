@@ -3,4 +3,8 @@ node_modules
 .git
 .env.local
 .DS_Store
+out
+build
+.git
+char-logs
 README.md
