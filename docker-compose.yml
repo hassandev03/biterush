@@ -8,11 +8,14 @@ services:
     image: biterush-app
     container_name: biterush-nextjs
     ports:
-      - "3000:3000" # Expose the app on port 3000
-    env_file:
-      - .env.local # Load any other environment variables
+      - "3000:3000" # maps port 3000 of EC2 to port 3000 of the container
     environment:
       - MONGODB_URI=mongodb://db:27017/biterush
+      - JWT_SECRET=br_secret_8f92a1b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t
+      - ADMIN_EMAIL=admin@biterush.pk
+      - ADMIN_PASSWORD=Admin@123
+      - COOKIE_SECURE=false
+      - PORT=3000
     depends_on:
       - db
     restart: unless-stopped
@@ -22,8 +25,6 @@ services:
   db:
     image: mongo:latest
     container_name: biterush-mongodb
-    ports:
-      - "27017:27017" # Expose port 27017 on EC2 to make data migration easy from MongoDB Atlas
     volumes:
       - mongodb_data:/data/db
     restart: unless-stopped
