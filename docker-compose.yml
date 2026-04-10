@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: biterush-app
+    container_name: biterush-nextjs
+    ports:
+      - "3000:3000" # Expose the app on port 3000
+    env_file:
+      - .env.local # Load any other environment variables
+    environment:
+      - MONGODB_URI=mongodb://db:27017/biterush
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - biterush-network
+
+  db:
+    image: mongo:latest
+    container_name: biterush-mongodb
+    ports:
+      - "27017:27017" # Expose port 27017 on EC2 to make data migration easy from MongoDB Atlas
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+    networks:
+      - biterush-network
+
+networks:
+  biterush-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
