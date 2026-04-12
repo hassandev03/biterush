@@ -13,6 +13,6 @@ This contains everything you need to run your app locally.
    - `JWT_SECRET`
 3. Run the app:
    `npm run dev`
-4. It'll run on default 3000 port
+4. It'll run on default 3000 port.
 
 
