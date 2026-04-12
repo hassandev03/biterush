@@ -1,12 +1,13 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: hassandev03/biterush:latest
-    container_name: biterush-nextjs
+    image: node:20-alpine
+    container_name: biterush-nextjs-jenkins
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run build && npm start"
     ports:
-      - "3000:3000" 
+      - "3001:3000" 
     environment:
       - MONGODB_URI=mongodb://db:27017/biterush
       - JWT_SECRET=br_secret_8f92a1b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t
@@ -22,11 +23,11 @@ services:
 
   db:
     image: mongo:latest
-    container_name: biterush-mongodb
+    container_name: biterush-mongodb-jenkins
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
-      - mongodb_data:/data/db
+      - mongodb_data_jenkins:/data/db
     restart: unless-stopped
     networks:
       - biterush-network
@@ -36,4 +37,4 @@ networks:
     driver: bridge
 
 volumes:
-  mongodb_data:
+  mongodb_data_jenkins:
