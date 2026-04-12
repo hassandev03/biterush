@@ -1,7 +1,7 @@
 services:
   app:
     image: node:20-alpine
-    container_name: biterush-nextjs-jenkins
+    container_name: biterush-app-jenkins
     working_dir: /app
     volumes:
       - .:/app # mounting the code from the current directory to /app
@@ -23,7 +23,7 @@ services:
 
   db:
     image: mongo:latest
-    container_name: biterush-mongodb-jenkins
+    container_name: biterush-db-jenkins
     ports:
       - "27018:27017"
     volumes:
@@ -37,4 +37,4 @@ networks:
     driver: bridge
 
 volumes:
-  mongodb_data_jenkins:
+  mongodb_data_jenkins: 
