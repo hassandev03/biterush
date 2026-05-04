@@ -20,20 +20,20 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                sh '''
-                    docker run --rm \
-                        --network host \
-                        --entrypoint "" \
-                        -v $(pwd)/tests:/app \
-                        pak00329/selenium_python_chrome \
-                        sh -c "pip install pytest -q && pytest /app -v --tb=short --junit-xml=/app/test-results.xml"
-                '''
-            }
-            post {
-                always { junit 'tests/test-results.xml' }
-            }
-        }
+    steps {
+        sh '''
+            docker run --rm \
+                --network host \
+                --entrypoint "" \
+                -v $(pwd)/tests:/app \
+                pak00329/selenium_python_chrome \
+                sh -c "pip install pytest -q && pytest /app -v --tb=short --junit-xml=/app/test-results.xml"
+        '''
+    }
+    post {
+        always { junit 'tests/test-results.xml' }
+    }
+}
     }
 
     post {
