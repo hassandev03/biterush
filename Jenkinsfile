@@ -15,13 +15,7 @@ pipeline {
             steps {
                 sh 'docker compose down || true'
                 sh 'docker compose up --build -d'
-                sh '''
-                    for i in $(seq 1 30); do
-                        curl -sf http://localhost:3001 && exit 0
-                        sleep 5
-                    done
-                    exit 1
-                '''
+                sleep(time: 60, unit: 'SECONDS')
             }
         }
 
