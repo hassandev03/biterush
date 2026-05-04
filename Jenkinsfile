@@ -5,9 +5,17 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
+        stage('Clone App') {
             steps {
                 git branch: 'main', url: 'https://github.com/hassandev03/biterush.git'
+            }
+        }
+
+        stage('Clone Tests') {
+            steps {
+                dir('tests-repo') {
+                    git branch: 'main', url: 'https://github.com/hassandev03/biterush-test.git'
+                }
             }
         }
 
@@ -15,25 +23,25 @@ pipeline {
             steps {
                 sh 'docker compose down || true'
                 sh 'docker compose up --build -d'
-                sleep(time: 90, unit: 'SECONDS')
+                sleep(time: 60, unit: 'SECONDS')
             }
         }
 
         stage('Run Tests') {
-    steps {
-        sh '''
-            docker run --rm \
-                --network host \
-                --entrypoint "" \
-                -v $(pwd)/tests:/app \
-                pak00329/selenium_python_chrome \
-                sh -c "pip install pytest -q && pytest /app -v --tb=short --junit-xml=/app/test-results.xml"
-        '''
-    }
-    post {
-        always { junit 'tests/test-results.xml' }
-    }
-}
+            steps {
+                sh '''
+                    docker run --rm \
+                        --network host \
+                        --entrypoint "" \
+                        -v $(pwd)/tests-repo:/app \
+                        pak00329/selenium_python_chrome \
+                        sh -c "pip install pytest -q && pytest /app -v --tb=short --junit-xml=/app/test-results.xml"
+                '''
+            }
+            post {
+                always { junit 'tests-repo/test-results.xml' }
+            }
+        }
     }
 
     post {
@@ -42,7 +50,7 @@ pipeline {
             script {
                 def pusherEmail = sh(script: "git log -1 --format='%ae'", returnStdout: true).trim()
                 emailext(
-                    to: "${pusherEmail}",
+                    to: "${pusherEmail}, qasimalik@gmail.com",
                     subject: "BiteRush Test Results — Build #${BUILD_NUMBER}: ${currentBuild.currentResult}",
                     body: """
                         Build: ${BUILD_URL}
@@ -51,7 +59,7 @@ pipeline {
 
                         See full test report: ${BUILD_URL}testReport/
                     """,
-                    attachmentsPattern: 'tests/test-results.xml'
+                    attachmentsPattern: 'tests-repo/test-results.xml'
                 )
             }
         }
