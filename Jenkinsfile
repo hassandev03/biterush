@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh 'docker compose down || true'
                 sh 'docker compose up --build -d'
-                sleep(time: 90, unit: 'SECONDS')
+                sleep(time: 100, unit: 'SECONDS')
             }
         }
 
@@ -46,11 +46,10 @@ pipeline {
 
     post {
         always {
-            sh 'docker compose down || true'
             script {
                 def pusherEmail = sh(script: "git log -1 --format='%ae'", returnStdout: true).trim()
                 emailext(
-                    to: "${pusherEmail}, qasimalik@gmail.com",
+                    to: "${pusherEmail}",
                     subject: "BiteRush Test Results — Build #${BUILD_NUMBER}: ${currentBuild.currentResult}",
                     body: """
                         Build: ${BUILD_URL}
