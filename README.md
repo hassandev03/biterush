@@ -1,4 +1,4 @@
-# Run and deploy your Biterush app
+# Run and deploy Biterush
 
 This contains everything you need to run your app locally.
 
